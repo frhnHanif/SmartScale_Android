@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+
+    <color name="eco_background">#F2FCF8</color>
+    <color name="eco_text_dark">#FF333333</color>
+    <color name="eco_text_gray">#FF6B7280</color>
+    <color name="eco_green_dark">#447F40</color>
+    <color name="eco_green_light">#E0F2E9</color>
+
+    <color name="eco_organik">#62B682</color>
+    <color name="eco_anorganik">#5C7AF3</color>
+    <color name="eco_residu">#D35748</color>
+
+    <color name="eco_line_chart">#14b8a6</color>
+    <color name="eco_no_data_gray">#E5E7EB</color>
+</resources>

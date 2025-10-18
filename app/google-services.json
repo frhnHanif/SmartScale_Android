@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "150127108115",
+    "project_id": "smart-scale-prooject",
+    "storage_bucket": "smart-scale-prooject.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:150127108115:android:9a82551ced7bd92e025fe6",
+        "android_client_info": {
+          "package_name": "com.example.ecoscale"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDjEvEfH1iHPiMwaRZykRj1nZwhSj0ZhdA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:150127108115:android:e85698d18b366abb025fe6",
+        "android_client_info": {
+          "package_name": "com.example.ecoscale_android"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDjEvEfH1iHPiMwaRZykRj1nZwhSj0ZhdA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
