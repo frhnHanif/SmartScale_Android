@@ -62,4 +62,7 @@ dependencies {
 
     // Library Grafik (Pengganti Chart.js untuk Android)
     implementation("com.github.PhilJay:MPAndroidChart:v3.1.0")
+
+    //Library untuk fragment
+    implementation("androidx.fragment:fragment-ktx:1.7.1")
 }
