@@ -74,10 +74,49 @@ class DashboardViewModel : ViewModel() {
     private val _fakultasAktif = MutableLiveData<Int>(0)
     val fakultasAktif: LiveData<Int> = _fakultasAktif
 
+    // 5. Status Upload (Untuk Input Manual)
+    private val _uploadStatus = MutableLiveData<String?>(null)
+    val uploadStatus: LiveData<String?> = _uploadStatus
+
+    private val _isLoading = MutableLiveData<Boolean>(false)
+    val isLoading: LiveData<Boolean> = _isLoading
+
+
     init {
         setupFirebaseListener()
     }
 
+    // Upload Data Manual
+    fun uploadManualData(berat: Double, jenis: String, fakultas: String) {
+        _isLoading.value = true
+
+        // Buat object data sesuai struktur Firestore kamu
+        val data = hashMapOf(
+            "berat" to berat,
+            "jenis" to jenis,
+            "fakultas" to fakultas,
+            "timestamp" to Timestamp.now(), // Waktu server saat ini
+            "sumber" to "Manual" // Opsional: penanda bahwa ini bukan dari sensor
+        )
+
+        db.collection("sampah")
+            .add(data)
+            .addOnSuccessListener {
+                _isLoading.value = false
+                _uploadStatus.value = "Sukses! Data berhasil disimpan."
+                // Reset status pesan setelah beberapa detik bisa dihandle di UI
+            }
+            .addOnFailureListener { e ->
+                _isLoading.value = false
+                _uploadStatus.value = "Gagal: ${e.message}"
+                Log.e(TAG, "Error adding document", e)
+            }
+    }
+
+    // Fungsi untuk mereset pesan status agar tidak muncul terus saat rotasi layar
+    fun clearUploadStatus() {
+        _uploadStatus.value = null
+    }
     private fun setupFirebaseListener() {
 
         // --- 1. Definisi Rentang Waktu ---
