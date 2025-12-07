@@ -50,7 +50,7 @@ class MainActivity : AppCompatActivity() {
 
                 // TODO: Ganti komentar ini setelah kamu membuat Fragment-nya
                 R.id.nav_fakultas -> OverviewFragment() // Ganti dengan FakultasFragment()
-                R.id.nav_analitik -> OverviewFragment() // Ganti dengan AnalitikFragment()
+                R.id.nav_analitik -> AnalitikFragment() // Ganti dengan AnalitikFragment()
                 R.id.nav_laporan -> OverviewFragment() // Ganti dengan LaporanFragment()
 
                 else -> OverviewFragment()
@@ -77,11 +77,10 @@ class MainActivity : AppCompatActivity() {
             binding.tvTotalSampahCard.text = formattedTotal
         }
 
-        // 3. (Opsional) Jika 'Fakultas Aktif' juga dinamis,
-        //    tambahkan observer-nya di sini.
-        // viewModel.fakultasAktif.observe(this) { count ->
-        //     binding.tvFakultasAktif.text = count.toString()
-        // }
+        // 3. Update Fakultas Aktif
+        viewModel.fakultasAktif.observe(this) { count ->
+            binding.tvFakultasAktif.text = count.toString()
+        }
     }
 
     /**
