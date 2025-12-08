@@ -6,8 +6,8 @@
         android:icon="@drawable/ic_overview" android:title="Overview" />
 
     <item
-        android:id="@+id/nav_fakultas"
-        android:icon="@drawable/ic_fakultas" android:title="Fakultas" />
+        android:id="@+id/nav_input_manual"
+        android:icon="@drawable/ic_input" android:title="Input Manual" />
 
     <item
         android:id="@+id/nav_analitik"
