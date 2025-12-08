@@ -28,6 +28,14 @@ data class FacultyWasteData(
     val residu: Double = 0.0
 )
 
+data class WasteTransaction(
+    val id: String,
+    val date: Date,
+    val fakultas: String,
+    val jenis: String,
+    val berat: Double
+)
+
 class DashboardViewModel : ViewModel() {
 
     private val db = Firebase.firestore
@@ -80,6 +88,15 @@ class DashboardViewModel : ViewModel() {
 
     private val _isLoading = MutableLiveData<Boolean>(false)
     val isLoading: LiveData<Boolean> = _isLoading
+
+    // --- LIVE DATA UI (BARU: Laporan) ---
+    private val _transactionHistory = MutableLiveData<List<WasteTransaction>>()
+    val transactionHistory: LiveData<List<WasteTransaction>> = _transactionHistory
+
+    private val _co2Reduced = MutableLiveData<Double>(0.0)
+    val co2Reduced: LiveData<Double> = _co2Reduced
+
+
 
 
     init {
@@ -272,5 +289,56 @@ class DashboardViewModel : ViewModel() {
             // Mengambil jumlah fakultas unik yang menyumbang sampah BULAN INI
             _fakultasAktif.value = tempFacultyMap.size
         }
+    }
+
+    // Fungsi untuk memfilter data laporan
+    fun fetchFilteredReport(startDate: Long, endDate: Long, selectedFakultas: String?) {
+        _isLoading.value = true
+
+        val startTimestamp = Timestamp(Date(startDate))
+        // Set end date ke akhir hari tersebut (23:59:59)
+        val endCal = Calendar.getInstance().apply { timeInMillis = endDate }
+        endCal.set(Calendar.HOUR_OF_DAY, 23)
+        endCal.set(Calendar.MINUTE, 59)
+        val endTimestamp = Timestamp(endCal.time)
+
+        var query = db.collection("sampah")
+            .whereGreaterThanOrEqualTo("timestamp", startTimestamp)
+            .whereLessThanOrEqualTo("timestamp", endTimestamp)
+
+        // Filter Fakultas jika dipilih (dan bukan "Semua")
+        if (!selectedFakultas.isNullOrEmpty() && selectedFakultas != "Semua Fakultas") {
+            query = query.whereEqualTo("fakultas", selectedFakultas)
+        }
+
+        query.get()
+            .addOnSuccessListener { documents ->
+                val list = mutableListOf<WasteTransaction>()
+                var totalBerat = 0.0
+
+                for (doc in documents) {
+                    val timestamp = (doc.get("timestamp") as? Timestamp)?.toDate() ?: Date()
+                    val berat = (doc.get("berat") as? Number)?.toDouble() ?: 0.0
+                    val jenis = doc.getString("jenis") ?: "-"
+                    val fakultas = doc.getString("fakultas") ?: "-"
+
+                    totalBerat += berat
+                    list.add(WasteTransaction(doc.id, timestamp, fakultas, jenis, berat))
+                }
+
+                // Sort manual descending (terbaru di atas) karena Firestore query index complex
+                list.sortByDescending { it.date }
+
+                _transactionHistory.value = list
+
+                // Estimasi: 1kg sampah didaur ulang ~ menghemat 0.5kg emisi CO2 (Contoh logika)
+                _co2Reduced.value = totalBerat * 0.5
+
+                _isLoading.value = false
+            }
+            .addOnFailureListener { e ->
+                _isLoading.value = false
+                Log.e(TAG, "Error fetch report", e)
+            }
     }
 }

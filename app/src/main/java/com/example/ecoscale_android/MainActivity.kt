@@ -49,9 +49,9 @@ class MainActivity : AppCompatActivity() {
                 R.id.nav_overview -> OverviewFragment()
 
                 // TODO: Ganti komentar ini setelah kamu membuat Fragment-nya
-                R.id.nav_input_manual-> InputManualFragment() // Ganti dengan FakultasFragment()
-                R.id.nav_analitik -> AnalitikFragment() // Ganti dengan AnalitikFragment()
-                R.id.nav_laporan -> OverviewFragment() // Ganti dengan LaporanFragment()
+                R.id.nav_input_manual-> InputManualFragment()
+                R.id.nav_analitik -> AnalitikFragment()
+                R.id.nav_laporan -> LaporanFragment()
 
                 else -> OverviewFragment()
             }
