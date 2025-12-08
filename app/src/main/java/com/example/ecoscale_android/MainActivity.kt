@@ -62,7 +62,7 @@ class MainActivity : AppCompatActivity() {
 
     /**
      * Meng-observe LiveData dari ViewModel untuk meng-update
-     * UI statis yang ada di MainActivity (Header dan Kartu KPI).
+     * UI statis yang ada di MainActivity (Header dan Kartu KPI)skdnkaskdsakdn.
      */
     private fun observeHeaderData() {
 
